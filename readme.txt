@@ -6,16 +6,11 @@
 # booksJson.js is what I used for that.
 # ran the PS command - PS C:\program files\MongoDB\server\4.4\bin> Get-Content C:\temp\booksJson.js | .\mongo bookAPI
 
+# 2 Do a  "npm install" to get libraries for package.json file, node_modules folder and it libraries
+# is not part of the source and this typical of node projects.
 
 
-
-# 2 Do a  npm install to get libraries for package.json file, node_modules folder and it libraries
-# is not part of the source
-
-
-
-
-# 3 npm start  - to start the server
+# 3 "npm start"  - to start the server. app.js is the entry point.
 
 PS D:\WayAround\expressexample> npm start
 
