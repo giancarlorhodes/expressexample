@@ -7,6 +7,12 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+// swagger
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 if (process.env.DB_ENV === 'TEST') {
   console.log('connecting to bookAPI_TEST ...');
   mongoose.connect('mongodb://localhost/bookAPI_TEST');

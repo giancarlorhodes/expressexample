@@ -1,0 +1,104 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Express / Node / Swagger UI Example",
+    "description": "Build Swapper UI example to consume Node/Express api",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:4000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Books",
+      "description": "API for books in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/books": {
+      "get": {
+        "tags": [
+          "books, get"
+        ],
+        "summary": "Get all books in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/books"
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "books, post"
+        ],
+        "summary": "Add a book to the system",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "book object that needs to be added",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/books"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+              "description": "The book has been created",
+              "schema": {
+                  "$ref": "#/definitions/books"
+              }
+          },
+          "default": {
+              "description": "Unexpected error",
+              "schema": {
+                  "$ref": "#/definitions/Errors"
+              }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "books": {
+      "required": [
+        "read",
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "read": {
+          "type": "boolean"
+        },
+        "title": {
+          "type": "string"
+        },
+        "genre": {
+          "type": "string"
+        },
+        "author": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
