@@ -41,7 +41,7 @@ paths:
     post:
       summary: Attempt logging in with username and password
       operationId: trylogin
-      description: Attempt login with form data username and password.  Exmaple http://api.wayaround.com/v1/account/trylogin
+      description: Attempt login with form data username and password.  Example http://api.wayaround.com/v1/account/trylogin
       produces:
         - application/json
       consumes:
@@ -62,16 +62,22 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/User'
+        401:
+          description: Unauthorized client
+        404:
+          description: Resource Not Found
+        500:
+          description: Internal Server Error
     get:
       summary: Get the user data by query string
       operationId: getuser
-      description: How does role affect this call? Global and Site Admins can get any individual. Regular User can only get their own data. Exmaple http://api.wayaround.com/v1/account/getuser?userId=123456789
+      description: Example http://api.wayaround.com/v1/account/getuser?userid=123456789
       produces:
         - application/json
       parameters:
         - in: query
-          name: userId
-          description: pass an optional user id
+          name: userid
+          description: pass an optional userid
           required: true
           type: integer
       responses:
@@ -79,21 +85,23 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/User'
+        401:
+          description: Unauthorized client
         404:
-          description: User Not Found
+          description: Resource Not Found
         500:
           description: Internal Server Error
-  /account/getuserbypath/{userId}:
+  /account/getuserbypath/{userid}:
     get:
       summary: Get the user data by path
       operationId: getuserbypath
-      description: functionally the same as getuser but passing userId in path. Exmaple http://api.wayaround.com/v1/account/getuserbypath/123456789 
+      description: functionally the same as getuser but passing userid in path. Example http://api.wayaround.com/v1/account/getuserbypath/123456789 
       produces:
         - application/json
       parameters:
         - in: path
-          name: userId
-          description: pass an optional user id in url path
+          name: userid
+          description: pass an optional userid in url path
           required: true
           type: integer
       responses:
@@ -101,21 +109,23 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/User'
+        401:
+          description: Unauthorized client
         404:
-          description: User Not Found
+          description: Resource Not Found
         500:
           description: Internal Server Error
-  /account/getuserroles/{userId}:        
+  /account/getuserroles/{userid}:        
     get:
       summary: get the user roles
       operationId: getuserroles
-      description: Exmaple http://api.wayaround.com/v1/account/getuserroles/123456789
+      description: Example http://api.wayaround.com/v1/account/getuserroles/123456789
       produces:
         - application/json
       parameters:
         - in: path
-          name: userId
-          description: pass an optional user id in url path
+          name: userid
+          description: pass an optional userid in url path
           required: true
           type: integer
       responses:
@@ -123,22 +133,24 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/UserRoles'
+        401:
+          description: Unauthorized client
         404:
-          description: User Not Found
+          description: Resource Not Found
         500:
           description: Internal Server Error
           
-  /account/getuserorganizations/{userId}:        
+  /account/getuserorganizations/{userid}:        
     get:
       summary: get the user organizations
       operationId: getuserorganizations
-      description: Exmaple http://api.wayaround.com/v1/account/getuserorganizations/123456789
+      description: Example http://api.wayaround.com/v1/account/getuserorganizations/123456789
       produces:
         - application/json
       parameters:
         - in: path
-          name: userId
-          description: pass an optional user id in url path
+          name: userid
+          description: pass an optional userid in url path
           required: true
           type: integer
       responses:
@@ -146,8 +158,135 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/UserOrganizations'
+        401:
+          description: Unauthorized client    
         404:
-          description: User Not Found
+          description: Resource Not Found
+        500:
+          description: Internal Server Error
+  /waytag:
+    get:
+      summary: search the waytag documents
+      operationId: search
+      description:  Example http://api.wayaround.com/v1/waytag/search?organizationid=abc&siteid=1234&userid=123456789&descripiton=search+for+this+content
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: organizationid
+          description: pass an optional organizationid
+          required: true
+          type: integer
+        - in: query
+          name: siteid
+          description: pass an optional siteid
+          required: false
+          type: integer
+        - in: query
+          name: userid
+          description: pass an optional userid
+          required: false
+          type: integer
+        - in: query
+          name: doctype
+          description: pass an optional doctype
+          required: false
+          type: string
+        - in: query
+          name: name
+          description: pass an optional name
+          required: false
+          type: string
+        - in: query
+          name: description
+          description: pass an optional description
+          required: false
+          type: string
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/SearchResultWayTags'
+        401:
+          description: Unauthorized client
+        404:
+          description: Resource Not Found
+        500:
+          description: Internal Server Error
+  /waytag/getwaytag/{uuid}:        
+    get:
+      summary: get a single waytag
+      operationId: getwaytag
+      description: Example http://api.wayaround.com/v1/waytag/getwaytag/123456789
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: uuid
+          description: pass an optional uuid in url path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/WayTag'
+        401:
+          description: Unauthorized client    
+        404:
+          description: Resource Not Found
+        500:
+          description: Internal Server Error
+  /waytag/updatewaytag/{uuid}:   
+    put:
+      summary: update an existing waytag
+      operationId: updatewaytag
+      description: This operation updates an existing waytag with new data. Example http://api.wayaround.com/v1/waytag/updatewaytag/123456789
+      consumes:
+        - application/json
+      parameters:
+        - in: body
+          name: waytagdetails
+          description: the updated waytag body data in JSON format
+          required: true
+          schema:
+            $ref: '#/definitions/WayTag'
+        - in: path
+          name: uuid
+          description: the uuid of the waytag to update in the url
+          required: true
+          type: integer
+      responses:
+        200: 
+          description: OK
+        401:
+          description: Unauthorized client    
+        404:
+          description: Resource Not Found
+        500:
+          description: Internal Server Error
+  /waytag/deletewaytag/{uuid}:
+    delete:
+      summary: delete an existing waytag
+      operationId: deletewaytag
+      description: This operation deletes an existing waytag.
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: uuid
+          description: the uuid of the waytag to delete. http://api.wayaround.com/v1/waytag/deletewaytag/123456789
+          required: true
+          type: integer
+      responses:
+        200: 
+          description: OK
+          schema:
+            $ref: '#/definitions/WayTag'
+        401:
+          description: Unauthorized client    
+        404:
+          description: Resource Not Found
         500:
           description: Internal Server Error
   /ping:
@@ -161,6 +300,45 @@ paths:
         200:
           description: OK
 definitions:
+  WayTag:
+    type: object
+    properties:
+      organizationid:
+        type: integer
+      siteid:
+        type: integer
+      ownerid:
+        type: integer
+      uuid:
+        type: integer
+      doctype:
+        type: string
+      name:
+        type: string
+      description:
+        type: string
+  SearchResultWayTags:
+    type: object
+    properties:
+      waytags:
+        type: array
+        items:
+          type: object
+          properties:
+            organizationid:
+              type: integer
+            siteid:
+              type: integer
+            ownerid:
+              type: integer
+            uuid:
+              type: integer
+            doctype:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
   UserRoles:
     type: object
     properties:

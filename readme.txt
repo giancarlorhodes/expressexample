@@ -29,6 +29,13 @@ Running on port 4000
 
 
 # 4 testing - you can use PostMan or browser to go to port 4000
-http://localhost:4000/api/books   - example of a GET all books and will return the json result
-POST, PATCH, PUT are more easily tested using PostMan
+# http://localhost:4000/api/books   - example of a GET all books and will return the json result
+# POST, PATCH, PUT are more easily tested using PostMan
+# http://localhost:4000/api/books/5f6a4807a30ad80f7c7fe759
+
+
+
+# 5 added swagger so you get the api thru the swapper ui 
+# http://localhost:4000/api-docs/
+# 
 

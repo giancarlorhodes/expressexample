@@ -30,21 +30,21 @@
     "/api/books": {
       "get": {
         "tags": [
-          "books, get"
+          "books"
         ],
         "summary": "Get all books in system",
         "responses": {
           "200": {
             "description": "OK",
             "schema": {
-              "$ref": "#/definitions/books"
+              "$ref": "#/definitions/Book"
             }
           }
         }
       },
       "post": {
         "tags": [
-          "books, post"
+          "books"
         ],
         "summary": "Add a book to the system",
         "parameters": [
@@ -54,7 +54,7 @@
             "description": "book object that needs to be added",
             "required": false,
             "schema": {
-              "$ref": "#/definitions/books"
+              "$ref": "#/definitions/Book"
             }
           }
         ],
@@ -62,13 +62,7 @@
           "201": {
               "description": "The book has been created",
               "schema": {
-                  "$ref": "#/definitions/books"
-              }
-          },
-          "default": {
-              "description": "Unexpected error",
-              "schema": {
-                  "$ref": "#/definitions/Errors"
+                  "$ref": "#/definitions/Book"
               }
           }
         }
@@ -76,11 +70,7 @@
     }
   },
   "definitions": {
-    "books": {
-      "required": [
-        "read",
-        "_id"
-      ],
+    "Book": {
       "properties": {
         "_id": {
           "type": "string",

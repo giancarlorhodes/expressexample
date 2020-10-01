@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const app = express();
 
 // swagger
+// http://localhost:4000/api-docs/
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
